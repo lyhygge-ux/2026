@@ -3,262 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>韓國・釜山・慶州 五日漫遊</title>
+    <title>韓國・釜山・慶州 智慧漫遊</title>
     <style>
         :root {
             --bg-color: #fdf8f1;
             --primary-blue: #a3c4f3;
             --primary-orange: #ffd1a4;
-            --primary-green: #c1e1c1;
-            --primary-purple: #dcd3ff;
             --text-color: #555;
             --gray-text: #ccc;
         }
 
-        body {
-            font-family: "Microsoft JhengHei", sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
+        body { font-family: "Microsoft JhengHei", sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
 
         /* 🎨 可愛標題區 */
-        header {
-            width: 100%;
-            padding: 40px 0;
-            background: linear-gradient(135deg, #a3c4f3 0%, #ffd1a4 100%);
-            color: white;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
+        header { width: 100%; padding: 40px 0; background: linear-gradient(135deg, #a3c4f3 0%, #ffd1a4 100%); color: white; text-align: center; position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        header h1 { font-size: 26px; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(5px); padding: 10px 30px; border-radius: 50px; display: inline-block; border: 2px solid white; margin-top: 10px; }
 
-        header::before {
-            content: "☁️ ✈️ 🌍 🎒 📸 ⛵";
-            position: absolute;
-            font-size: 24px;
-            width: 120%;
-            top: 10px;
-            left: -10%;
-            opacity: 0.3;
-            letter-spacing: 50px;
-            animation: moveClouds 20s linear infinite;
-        }
+        /* 導覽列 */
+        .date-nav { display: flex; gap: 10px; margin: 25px 0; overflow-x: auto; padding: 10px; width: 95%; justify-content: flex-start; }
+        .date-btn { border: none; padding: 10px 18px; border-radius: 20px; background: white; cursor: pointer; font-weight: bold; box-shadow: 2px 2px 5px rgba(0,0,0,0.05); white-space: nowrap; }
+        .date-btn.active { background-color: var(--primary-blue); color: white; }
+        .btn-finance { background-color: #ffe5ec; }
+        .btn-blog { background-color: #e2ece9; }
 
-        @keyframes moveClouds {
-            from { transform: translateX(-10%); }
-            to { transform: translateX(10%); }
-        }
-
-        header h1 {
-            font-size: 26px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            padding: 10px 30px;
-            border-radius: 50px;
-            display: inline-block;
-            border: 2px solid white;
-            margin-top: 10px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-        }
-
-        /* 日期導覽列 */
-        .date-nav {
-            display: flex;
-            gap: 10px;
-            margin: 25px 0;
-            overflow-x: auto;
-            padding: 10px;
-            width: 95%;
-            justify-content: flex-start;
-        }
-
-        @media (min-width: 768px) {
-            .date-nav { justify-content: center; }
-        }
-
-        .date-btn {
-            border: none;
-            padding: 10px 18px;
-            border-radius: 20px;
-            background: white;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
-            white-space: nowrap;
-            color: var(--text-color);
-        }
-
-        .date-btn.active {
-            background-color: var(--primary-blue);
-            color: white;
-        }
-
-        /* 行程內容卡片 */
-        .content-card {
-            background: white;
-            width: 90%;
-            max-width: 500px;
-            border-radius: 25px;
-            padding: 25px;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.03);
-            display: none;
-            margin-bottom: 40px;
-            animation: fadeIn 0.5s ease;
-        }
-
+        /* 卡片設計 */
+        .content-card { background: white; width: 90%; max-width: 500px; border-radius: 25px; padding: 25px; box-shadow: 5px 5px 15px rgba(0,0,0,0.03); display: none; margin-bottom: 40px; }
         .content-card.active { display: block; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* 景點細節與美食 */
+        .spot-item { border-bottom: 1px dashed #eee; padding: 15px 0; }
+        .spot-name { font-weight: bold; display: flex; align-items: center; gap: 8px; }
+        .food-info { font-size: 13px; color: #d9480f; background: #fff4e6; padding: 5px 10px; border-radius: 8px; margin-top: 8px; display: inline-block; }
+        .photo-placeholder { width: 100%; height: 180px; background: #f0f0f0; border-radius: 15px; margin: 10px 0; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 12px; border: 1px solid #eee; }
 
-        /* 行前清單樣式 */
-        .checklist-group { margin-bottom: 20px; }
-        .checklist-group h4 { border-left: 4px solid var(--primary-orange); padding-left: 10px; margin-bottom: 10px; color: #333; }
-        .check-item { display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; }
-        .check-item input { width: 18px; height: 18px; margin-right: 12px; cursor: pointer; }
-        .check-item input:checked + span { text-decoration: line-through; color: var(--gray-text); }
+        /* 智慧記帳區 */
+        .acc-section { background: #f8f9fa; border-radius: 15px; padding: 15px; margin-top: 20px; border: 1px solid #eee; }
+        .acc-input { display: flex; gap: 8px; margin-top: 10px; }
+        input, textarea { border: 1px solid #ddd; padding: 10px; border-radius: 10px; flex: 1; }
+        .add-btn { background: var(--primary-blue); color: white; border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; }
 
-        /* 行程細節樣式 */
-        .weather-info { background: #f0f7ff; padding: 10px; border-radius: 15px; margin-bottom: 20px; display: flex; align-items: center; font-size: 14px; }
-        .itinerary-list { list-style: none; padding: 0; }
-        .itinerary-list li { margin-bottom: 12px; display: flex; align-items: flex-start; line-height: 1.6; }
-        .itinerary-list span { margin-right: 10px; }
+        /* 財務儀表板 */
+        .finance-summary { background: #333; color: #a2f3a2; padding: 25px; border-radius: 20px; text-align: center; margin-bottom: 20px; }
         
-        footer { margin-top: auto; padding: 20px; font-size: 12px; color: #999; text-align: center; }
+        /* IG 日誌牆 */
+        .blog-post { border: 1px solid #eee; border-radius: 20px; padding: 15px; margin-bottom: 20px; background: #fff; }
+        .blog-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+        .blog-imgs img { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; }
+
+        footer { padding: 20px; font-size: 12px; color: #999; text-align: center; }
     </style>
 </head>
 <body>
 
     <header>
         <p>SEOUL・BUSAN・GYEONGJU</p>
-        <h1>✈️ 釜山慶州・趣旅行</h1>
+        <h1>✈️ 釜山慶州・智慧漫遊</h1>
     </header>
 
     <div class="date-nav">
-        <button class="date-btn active" onclick="showDay(0)">📋 行前清單</button>
+        <button class="date-btn active" onclick="showDay(0)">📋 清單</button>
         <button class="date-btn" onclick="showDay(1)">5/15(五)</button>
         <button class="date-btn" onclick="showDay(2)">5/16(六)</button>
         <button class="date-btn" onclick="showDay(3)">5/17(日)</button>
         <button class="date-btn" onclick="showDay(4)">5/18(一)</button>
         <button class="date-btn" onclick="showDay(5)">5/19(二)</button>
-    </div>
-
-    <div id="day0" class="content-card active">
-        <h3>🎒 行前打包清單</h3>
-        <div class="checklist-group">
-            <h4>🛂 必帶證件與金錢</h4>
-            <label class="check-item"><input type="checkbox"><span>護照</span></label>
-            <label class="check-item"><input type="checkbox"><span>現金</span></label>
-            <label class="check-item"><input type="checkbox"><span>信用卡</span></label>
-            <label class="check-item"><input type="checkbox"><span>雨傘</span></label>
-            <label class="check-item"><input type="checkbox"><span>轉接插頭</span></label>
-            <label class="check-item"><input type="checkbox"><span>手機充電線 *2</span></label>
-            <label class="check-item"><input type="checkbox"><span>上課用耳機</span></label>
-        </div>
-
-        <div class="checklist-group">
-            <h4>👕 一般物品</h4>
-            <label class="check-item"><input type="checkbox"><span>防曬帽</span></label>
-            <label class="check-item"><input type="checkbox"><span>防曬乳</span></label>
-            <label class="check-item"><input type="checkbox"><span>毛巾</span></label>
-            <label class="check-item"><input type="checkbox"><span>隱形眼鏡</span></label>
-            <label class="check-item"><input type="checkbox"><span>清洗液</span></label>
-            <label class="check-item"><input type="checkbox"><span>保冰袋</span></label>
-            <label class="check-item"><input type="checkbox"><span>水壺</span></label>
-            <label class="check-item"><input type="checkbox"><span>小包衛生紙</span></label>
-            <label class="check-item"><input type="checkbox"><span>濕紙巾</span></label>
-        </div>
-
-        <div class="checklist-group">
-            <h4>🧴 盥洗清潔類</h4>
-            <label class="check-item"><input type="checkbox"><span>保養品</span></label>
-            <label class="check-item"><input type="checkbox"><span>洗面乳</span></label>
-            <label class="check-item"><input type="checkbox"><span>化妝品</span></label>
-            <label class="check-item"><input type="checkbox"><span>刮鬍刀</span></label>
-            <label class="check-item"><input type="checkbox"><span>牙刷</span></label>
-        </div>
+        <button class="date-btn btn-finance" onclick="showDay(6)">💰 記帳</button>
+        <button class="date-btn btn-blog" onclick="showDay(7)">📸 日誌</button>
     </div>
 
     <div id="day1" class="content-card">
-        <div class="weather-info">☀️ 慶州預測：18°C - 24°C</div>
         <h3>慶州韓屋漫遊</h3>
-        <ul class="itinerary-list">
-            <li><span>✈️</span> 桃園 → 金海機場</li>
-            <li><span>♨️</span> 韓式汗蒸幕</li>
-            <li><span>⛩️</span> 慶州崔氏古宅韓屋村</li>
-            <li><span>🌉</span> 月精橋</li>
-            <li><span>📍</span> 皇理團路</li>
-            <li><span>☕</span> 慶洲韓屋星巴克 (飲料自理)</li>
-        </ul>
+        <div class="spot-item">
+            <div class="spot-name">⛩️ 慶州崔氏古宅</div>
+            <div class="photo-placeholder">點擊日誌功能上傳照片</div>
+            <div class="food-info">🍴 推薦美食：校洞紫菜包飯</div>
+        </div>
+        <div class="spot-item">
+            <div class="spot-name">☕ 慶洲韓屋星巴克</div>
+            <div class="food-info">🥤 必點：限定款韓屋杯</div>
+        </div>
+        <div class="acc-section">
+            <b>💸 Day 1 智慧記帳</b>
+            <div class="acc-input">
+                <input type="text" id="item1" placeholder="品項">
+                <input type="number" id="cost1" placeholder="韓元₩">
+                <button class="add-btn" onclick="addExpense(1)">新增</button>
+            </div>
+        </div>
     </div>
 
-    <div id="day2" class="content-card">
-        <div class="weather-info">🌤️ 釜山預測：19°C - 23°C</div>
-        <h3>釜山樂園暢遊</h3>
-        <ul class="itinerary-list">
-            <li><span>🌊</span> 海東龍宮寺</li>
-            <li><span>🎡</span> 釜山樂天世界樂園 (門票+無限暢玩)</li>
-            <li><span>🏎️</span> 樂天 OUTLET + LUGE 斜坡滑車 (2次卷)</li>
-        </ul>
+    <div id="day6" class="content-card">
+        <h3>💰 財務總覽儀表板</h3>
+        <div class="finance-summary">
+            <p style="margin:0; font-size: 14px; opacity: 0.8;">總支出估計 (TWD)</p>
+            <h2 id="totalTWD" style="margin:10px 0; font-size: 32px;">$ 0</h2>
+            <p style="margin:0; font-size: 14px;">韓元總計: <span id="totalKRW">0</span> ₩</p>
+        </div>
+        <div id="expenseDetail"></div>
+        <button onclick="clearAll()" style="width:100%; padding:12px; background:#ff8787; color:white; border:none; border-radius:12px; margin-top:20px;">清空所有帳目</button>
     </div>
 
-    <div id="day3" class="content-card">
-        <div class="weather-info">☁️ 海雲台預測：17°C - 21°C</div>
-        <h3>海雲台藍線與夜景</h3>
-        <ul class="itinerary-list">
-            <li><span>🌸</span> 東柏島 APECHOUSE (山茶花季)</li>
-            <li><span>🚃</span> 海雲台藍線公園海洋觀光列車 (單程券)</li>
-            <li><span>🐟</span> 海雲台傳統市場</li>
-            <li><span>🌃</span> THE BAY 101 夜景</li>
-        </ul>
+    <div id="day7" class="content-card">
+        <h3>📸 旅行圖文誌</h3>
+        <div class="acc-section" style="background: #fff;">
+            <input type="text" id="postTitle" placeholder="標題..." style="width:95%; margin-bottom:10px;">
+            <textarea id="postContent" placeholder="記錄這刻的心情..." style="width:95%; height:80px;"></textarea>
+            <input type="file" id="postFile" multiple accept="image/*" style="margin-top:10px;">
+            <button class="add-btn" style="width:100%; margin-top:15px;" onclick="savePost()">發布到日誌牆</button>
+        </div>
+        <div id="blogWall" style="margin-top:20px;"></div>
     </div>
 
-    <div id="day4" class="content-card">
-        <div class="weather-info">☀️ 影島預測：20°C - 25°C</div>
-        <h3>白淺灘與松島</h3>
-        <ul class="itinerary-list">
-            <li><span>🌿</span> 人參專賣店</li>
-            <li><span>✨</span> 時尚彩妝店</li>
-            <li><span>🌊</span> 白淺灘文化村</li>
-            <li><span>🛤️</span> 絕影海岸散步路</li>
-            <li><span>🚠</span> 松島天空步道</li>
-            <li><span>🛍️</span> 西面鬧區逛街</li>
-        </ul>
-    </div>
-
-    <div id="day5" class="content-card">
-        <div class="weather-info">🌦️ 釜山預測：18°C - 22°C</div>
-        <h3>甘川與歸途</h3>
-        <ul class="itinerary-list">
-            <li><span>🏡</span> 甘川文化洞彩繪村</li>
-            <li><span>🏛️</span> 釜山近現代歷史館</li>
-            <li><span>🛍️</span> 南浦洞商圈 (光復洞時裝街、國際市場、BIFF廣場) 自由逛街</li>
-            <li><span>✈️</span> 金海機場 → 桃園</li>
-        </ul>
-    </div>
-
-    <footer>✨ 2026 釜山旅程計畫 ✈️</footer>
+    <div id="day0" class="content-card active"><h3>🎒 行前清單</h3><p>請勾選已準備物品...</p></div>
+    <div id="day2" class="content-card"><h3>釜山樂園暢遊</h3><div class="acc-section"><b>💸 Day 2 記帳</b><div class="acc-input"><input type="text" id="item2" placeholder="品項"><input type="number" id="cost2" placeholder="韓元₩"><button class="add-btn" onclick="addExpense(2)">新增</button></div></div></div>
+    <footer>✨ 2026 釜山慶州智慧手帳</footer>
 
     <script>
-        function showDay(num) {
-            const cards = document.querySelectorAll('.content-card');
-            const btns = document.querySelectorAll('.date-btn');
-            cards.forEach(c => c.style.display = 'none');
-            btns.forEach(b => b.classList.remove('active'));
+        const RATE = 0.024;
+        let expenses = JSON.parse(localStorage.getItem('busan_acc')) || [];
+        let posts = JSON.parse(localStorage.getItem('busan_posts')) || [];
+
+        function showDay(n) {
+            document.querySelectorAll('.content-card').forEach(c => c.style.display='none');
+            document.querySelectorAll('.date-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('day'+n).style.display='block';
+            document.querySelectorAll('.date-btn')[n].classList.add('active');
+            if(n===6) refreshFinance();
+            if(n===7) renderPosts();
+        }
+
+        // 記帳
+        function addExpense(day) {
+            const item = document.getElementById('item'+day).value;
+            const cost = document.getElementById('cost'+day).value;
+            if(!item || !cost) return;
+            expenses.push({ day, item, cost: parseInt(cost) });
+            localStorage.setItem('busan_acc', JSON.stringify(expenses));
+            alert("已記錄！");
+            document.getElementById('item'+day).value = '';
+            document.getElementById('cost'+day).value = '';
+        }
+
+        function refreshFinance() {
+            const detail = document.getElementById('expenseDetail');
+            let total = 0;
+            detail.innerHTML = expenses.map(ex => {
+                total += ex.cost;
+                return `<div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #eee;">
+                    <span>D${ex.day}: ${ex.item}</span><span>${ex.cost.toLocaleString()} ₩</span>
+                </div>`;
+            }).join('');
+            document.getElementById('totalKRW').innerText = total.toLocaleString();
+            document.getElementById('totalTWD').innerText = '$ ' + Math.round(total * RATE).toLocaleString();
+        }
+
+        function clearAll() { if(confirm("確定刪除？")) { expenses=[]; localStorage.removeItem('busan_acc'); refreshFinance(); } }
+
+        // 日誌
+        function savePost() {
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('postContent').value;
+            const files = document.getElementById('postFile').files;
             
-            document.getElementById('day' + num).style.display = 'block';
-            btns[num].classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const readers = [...files].map(f => new Promise(res => {
+                const fr = new FileReader();
+                fr.onload = e => res(e.target.result);
+                fr.readAsDataURL(f);
+            }));
+
+            Promise.all(readers).then(imgs => {
+                posts.unshift({ title, content, imgs, date: new Date().toLocaleString(), author: "釜山旅人" });
+                localStorage.setItem('busan_posts', JSON.stringify(posts));
+                renderPosts();
+            });
+        }
+
+        function renderPosts() {
+            document.getElementById('blogWall').innerHTML = posts.map(p => `
+                <div class="blog-post">
+                    <small>${p.date} • ${p.author}</small>
+                    <h4>${p.title}</h4>
+                    <p>${p.content}</p>
+                    <div class="blog-imgs">${p.imgs.map(img => `<img src="${img}">`).join('')}</div>
+                </div>
+            `).join('');
         }
     </script>
 </body>
