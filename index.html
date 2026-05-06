@@ -32,35 +32,34 @@
         .content-card.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 智慧匯率與財務儀表板 */
-        .calc-box { background: #fff9e6; border: 2px solid #ffd1a4; border-radius: 15px; padding: 15px; margin-bottom: 20px; text-align: center; }
-        .calc-input-group { display: flex; align-items: center; gap: 10px; justify-content: center; margin-top: 10px; }
-        .calc-input { width: 120px; padding: 10px; border-radius: 10px; border: 1px solid #ddd; text-align: center; font-size: 16px; }
+        .price-tag { background: #fff9e6; padding: 15px; border-radius: 15px; font-size: 14px; border-left: 5px solid #ffd1a4; margin: 15px 0; line-height: 1.6; }
 
-        .finance-summary { background: var(--deep-cream); color: var(--dark-brown); padding: 25px; border-radius: 20px; text-align: center; margin-bottom: 20px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); }
-        .acc-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #d7c5a8; font-size: 14px; }
-
-        /* 修正新增支出佈局：改為垂直堆疊以防止手機端溢出 */
-        .expense-form { background:#f0f7ff; padding:15px; border-radius:15px; margin-top:20px; box-sizing: border-box; }
+        .expense-form { background:#f0f7ff; padding:15px; border-radius:15px; margin-top:20px; }
         .expense-input-group { display:flex; flex-direction: column; gap:10px; margin-top:10px; }
         .expense-inputs { display: flex; gap: 8px; width: 100%; }
-        .expense-inputs input { min-width: 0; } /* 防止 input 撐開 flex */
-
-        .blog-post { border: 1px solid #eee; border-radius: 20px; padding: 15px; margin-bottom: 20px; background: #fff; }
-        .blog-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
-        .blog-imgs img { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; }
-        .add-btn { background: var(--primary-blue); color: white; border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; }
-        input, textarea { border: 1px solid #ddd; padding: 10px; border-radius: 10px; font-size: 14px; width: 100%; box-sizing: border-box; }
-        footer { padding: 20px; font-size: 12px; color: #999; text-align: center; }
         
+        .add-btn { background: var(--primary-blue); color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; }
+        input, textarea { border: 1px solid #ddd; padding: 10px; border-radius: 10px; font-size: 14px; width: 100%; box-sizing: border-box; }
+        
+        .finance-summary { background: var(--deep-cream); color: var(--dark-brown); padding: 25px; border-radius: 20px; text-align: center; margin-bottom: 20px; }
+        .acc-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #d7c5a8; font-size: 14px; }
+
         .checklist-group { margin-bottom: 20px; }
         .checklist-group h4 { border-left: 4px solid var(--primary-orange); padding-left: 10px; margin-bottom: 10px; color: #333; }
         .check-item { display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; }
         .check-item input { width: 18px; height: 18px; margin-right: 12px; flex-shrink: 0; }
         .check-item input:checked + span { text-decoration: line-through; color: var(--gray-text); }
+        
         .itinerary-list { list-style: none; padding: 0; }
         .itinerary-list li { margin-bottom: 12px; display: flex; align-items: flex-start; line-height: 1.6; }
         .itinerary-list span { margin-right: 10px; }
+        .weather-info { background: #f0f7ff; padding: 10px; border-radius: 15px; margin-bottom: 15px; font-size: 14px; display: flex; align-items: center; }
+
+        .blog-post { border: 1px solid #eee; border-radius: 20px; padding: 15px; margin-bottom: 20px; background: #fff; }
+        .blog-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+        .blog-imgs img { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; }
+
+        footer { padding: 20px; font-size: 12px; color: #999; text-align: center; }
     </style>
 </head>
 <body>
@@ -71,7 +70,7 @@
     </header>
 
     <div class="date-nav">
-        <button class="date-btn active" onclick="showDay(0)">📋 行前打包清單</button>
+        <button class="date-btn active" onclick="showDay(0)">📋 打包清單</button>
         <button class="date-btn" onclick="showDay(1)">5/15(五)</button>
         <button class="date-btn" onclick="showDay(2)">5/16(六)</button>
         <button class="date-btn" onclick="showDay(3)">5/17(日)</button>
@@ -81,69 +80,43 @@
         <button class="date-btn btn-blog" onclick="showDay(7)">📸 旅人日誌</button>
     </div>
 
-    <div id="day6" class="content-card">
-        <h3>💱 智慧匯率換算 (0.022)</h3>
-        <div class="calc-box">
-            <p style="margin:0; font-size: 14px;">輸入韓元自動轉台幣</p>
-            <div class="calc-input-group">
-                <input type="number" class="calc-input" id="krwInput" placeholder="韓元₩" oninput="convertCurrency()">
-                <span>➔</span>
-                <b style="color: #d9480f; font-size: 20px;">NT$ <span id="twdOutput">0</span></b>
-            </div>
-        </div>
-
-        <h3>💰 財務總覽 (TWD)</h3>
-        <div class="finance-summary">
-            <h2 id="grandTotalTWD" style="margin:0; font-size: 36px;">$ 0</h2>
-            <p style="margin:5px 0 0 0; font-size: 14px; font-weight: bold; opacity: 0.8;">韓元累計: <span id="grandTotalKRW">0</span> ₩</p>
-        </div>
-
-        <div id="expenseList" style="margin-top:15px;"></div>
-        <button onclick="clearData()" style="width:100%; padding:12px; background:#ff8787; color:white; border:none; border-radius:12px; margin-top:20px; font-weight:bold;">清空帳目</button>
-    </div>
-
     <div id="day0" class="content-card active">
         <h3>🎒 行前打包清單</h3>
-        <p>請記得勾選你的行李清單！</p>
+        <p style="font-size:12px; color:#999;">勾選後會自動儲存於此設備</p>
         <div class="checklist-group">
             <h4>🛂 必帶證件與金錢</h4>
-            <label class="check-item"><input type="checkbox"><span>護照</span></label>
-            <label class="check-item"><input type="checkbox"><span>現金</span></label>
-            <label class="check-item"><input type="checkbox"><span>信用卡</span></label>
-            <label class="check-item"><input type="checkbox"><span>雨傘</span></label>
-            <label class="check-item"><input type="checkbox"><span>轉接插頭</span></label>
-            <label class="check-item"><input type="checkbox"><span>手機充電線 *2</span></label>
-            <label class="check-item"><input type="checkbox"><span>上課用耳機</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>護照</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>現金</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>信用卡</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>雨傘</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>轉接插頭</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>手機充電線 *2</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>上課用耳機</span></label>
         </div>
         <div class="checklist-group">
             <h4>👕 一般物品</h4>
-            <label class="check-item"><input type="checkbox"><span>防曬帽</span></label>
-            <label class="check-item"><input type="checkbox"><span>防曬乳</span></label>
-            <label class="check-item"><input type="checkbox"><span>毛巾</span></label>
-            <label class="check-item"><input type="checkbox"><span>隱形眼鏡</span></label>
-            <label class="check-item"><input type="checkbox"><span>清洗液</span></label>
-            <label class="check-item"><input type="checkbox"><span>保冰袋</span></label>
-            <label class="check-item"><input type="checkbox"><span>水壺</span></label>
-            <label class="check-item"><input type="checkbox"><span>小包衛生紙</span></label>
-            <label class="check-item"><input type="checkbox"><span>濕紙巾</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>防曬帽</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>防曬乳</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>毛巾</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>隱形眼鏡</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>清洗液</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>保冰袋</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>水壺</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>小包衛生紙</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>濕紙巾</span></label>
         </div>
         <div class="checklist-group">
             <h4>🧴 盥洗清潔類</h4>
-            <label class="check-item"><input type="checkbox"><span>保養品</span></label>
-            <label class="check-item"><input type="checkbox"><span>洗面乳</span></label>
-            <label class="check-item"><input type="checkbox"><span>化妝品</span></label>
-            <label class="check-item"><input type="checkbox"><span>刮鬍刀</span></label>
-            <label class="check-item"><input type="checkbox"><span>牙刷</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>保養品</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>洗面乳</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>化妝品</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>刮鬍刀</span></label>
+            <label class="check-item"><input type="checkbox" class="save-state"><span>牙刷</span></label>
         </div>
     </div>
 
-
-    
-    <div id="day1" class="content-card active">
-        <div class="weather-info">
-            <span class="weather-icon">☀️</span>
-            <span>慶州預測：晴天 18°C - 24°C (適合穿薄長袖)</span>
-       </div>
+    <div id="day1" class="content-card">
+        <div class="weather-info">☀️ 慶州預測：晴天 18°C - 24°C</div>
         <h3>5/15(五) 慶州韓屋漫遊</h3>
         <ul class="itinerary-list">
             <li><span>✈️</span> 桃園 → 金海機場</li>
@@ -154,10 +127,10 @@
             <li><span>☕</span> 慶洲韓屋星巴克 (飲料自理)</li>
         </ul>
         <div class="price-tag">
-            |早餐: 豬肉湯飯+季節小菜 ₩10,000<br>
-            |午餐: 馬鈴薯燉鍋+季節小菜 ₩12,000<br>
-            |晚餐: 南瓜煙燻鴨肉+清蒸鵝肉+紫米飯 ₩18,000<br>
-             </div>  
+            早餐: 豬肉湯飯+季節小菜 ₩10,000<br>
+            午餐: 馬鈴薯燉鍋+季節小菜 ₩12,000<br>
+            晚餐: 南瓜煙燻鴨肉+清蒸鵝肉+紫米飯 ₩18,000
+        </div>
         <div class="expense-form">
             <b>💸 新增此日支出</b>
             <div class="expense-input-group">
@@ -171,10 +144,7 @@
     </div>
 
     <div id="day2" class="content-card">
-        <div class="weather-info">
-            <span class="weather-icon">🌤️</span>
-            <span>釜山預測：多雲時晴 19°C - 23°C</span>
-        </div>        
+        <div class="weather-info">🌤️ 釜山預測：19°C - 23°C</div>
         <h3>5/16(六) 釜山樂園暢遊</h3>
         <ul class="itinerary-list">
             <li><span>🌊</span> 海東龍宮寺</li>
@@ -182,10 +152,10 @@
             <li><span>🏎️</span> 樂天 OUTLET + LUGE 斜坡滑車 (2次卷)</li>
         </ul>
         <div class="price-tag">
-            |早餐: 飯店內享用<br>
-            |午餐: 樂園自理<br>
-            |晚餐: 百年土種人參雞 ₩17,000<br>
-            </div>
+            早餐: 飯店內享用<br>
+            午餐: 樂園自理<br>
+            晚餐: 百年土種人參雞 ₩17,000
+        </div>
         <div class="expense-form">
             <b>💸 新增支出</b>
             <div class="expense-input-group">
@@ -199,22 +169,19 @@
     </div>
 
     <div id="day3" class="content-card">
-        <div class="weather-info">
-            <span class="weather-icon">☁️</span>
-            <span>海雲台預測：陰天 17°C - 21°C</span>
-        </div>
+        <div class="weather-info">☁️ 海雲台預測：17°C - 21°C</div>
         <h3>5/17(日) 海雲台藍線與夜景</h3>
         <ul class="itinerary-list">
-            <li><span>🌸</span> 東柏島 APECHOUSE (山茶花季)</li>
-            <li><span>🚃</span> 海雲台藍線公園海洋觀光列車 (單程券)</li>
+            <li><span>🌸</span> 東柏島 APECHOUSE</li>
+            <li><span>🚃</span> 藍線公園海洋觀光列車 (單程券)</li>
             <li><span>🐟</span> 海雲台傳統市場</li>
             <li><span>🌃</span> THE BAY 101 夜景</li>
         </ul>
         <div class="price-tag">
-            |早餐: 飯店內享用<br>
-            |午餐: 海鮮蒸鍋(鮑魚.章魚.貝類.蝦) ₩23,000<br>
-            |晚餐: 明倫進士~烤肉吃到飽+飲料 ₩21,900<br>
-            </div>
+            早餐: 飯店內享用<br>
+            午餐: 海鮮蒸鍋 ₩23,000<br>
+            晚餐: 烤肉吃到飽 ₩21,900
+        </div>
         <div class="expense-form">
             <b>💸 新增支出</b>
             <div class="expense-input-group">
@@ -226,26 +193,22 @@
             </div>
         </div>
     </div>
-    
+
     <div id="day4" class="content-card">
-        <div class="weather-info">
-            <span class="weather-icon">☀️</span>
-            <span>影島預測：晴朗 20°C - 25°C</span>
-        </div>
+        <div class="weather-info">☀️ 影島預測：晴朗 20°C - 25°C</div>
         <h3>5/18(一) 白淺灘與松島</h3>
         <ul class="itinerary-list">
-            <li><span>🌿</span> 人參專賣店</li>
-            <li><span>✨</span> 時尚彩妝店</li>
+            <li><span>🌿</span> 人參專賣店 / 時尚彩妝店</li>
             <li><span>🌊</span> 白淺灘文化村</li>
             <li><span>🛤️</span> 絕影海岸散步路</li>
             <li><span>🚠</span> 松島天空步道</li>
             <li><span>🛍️</span> 西面鬧區逛街</li>
         </ul>
-            <div class="price-tag">
-            |早餐: 飯店內享用<br>
-            |午餐: 龍蝦一隻雞(每人半隻龍蝦) ₩38,000<br>
-            |晚餐: 方便逛街，自理<br>  
-         </div>
+        <div class="price-tag">
+            早餐: 飯店內享用<br>
+            午餐: 龍蝦一隻雞 ₩38,000<br>
+            晚餐: 自理
+        </div>
         <div class="expense-form">
             <b>💸 新增支出</b>
             <div class="expense-input-group">
@@ -257,24 +220,21 @@
             </div>
         </div>
     </div>
-    
+
     <div id="day5" class="content-card">
-         <div class="weather-info">
-            <span class="weather-icon">🌦️</span>
-            <span>釜山市區預測：短暫雨 18°C - 22°C</span>
-        </div>        
+        <div class="weather-info">🌦️ 釜山預測：18°C - 22°C</div>
         <h3>5/19(二) 甘川與歸途</h3>
         <ul class="itinerary-list">
             <li><span>🏡</span> 甘川文化洞彩繪村</li>
             <li><span>🏛️</span> 釜山近現代歷史館</li>
-            <li><span>🛍️</span> 南浦洞商圈 (光復洞時裝街、國際市場、BIFF廣場) 自由逛街</li>
+            <li><span>🛍️</span> 南浦洞商圈自由逛街</li>
             <li><span>✈️</span> 金海機場 → 桃園</li>
         </ul>
-             <div class="price-tag">
-            |早餐: 飯店內享用<br>
-            |午餐: 白鍾元韓式炸醬面+糖醋肉(4人一份) ₩15,000<br>
-            |晚餐: 方便逛街，自理<br>  
-        </div>        
+        <div class="price-tag">
+            早餐: 飯店內享用<br>
+            午餐: 韓式炸醬面+糖醋肉 ₩15,000<br>
+            晚餐: 自理
+        </div>
         <div class="expense-form">
             <b>💸 新增支出</b>
             <div class="expense-input-group">
@@ -287,13 +247,28 @@
         </div>
     </div>
 
+    <div id="day6" class="content-card">
+        <h3>💱 智慧匯率換算 (0.022)</h3>
+        <div class="calc-box" style="background:#fff9e6; padding:15px; border-radius:15px; text-align:center;">
+            <input type="number" id="krwInput" placeholder="輸入韓元₩" oninput="convertCurrency()" style="width:120px; text-align:center;">
+            <span>➔ NT$ <b id="twdOutput">0</b></span>
+        </div>
+        <h3>💰 財務總覽 (TWD)</h3>
+        <div class="finance-summary">
+            <h2 id="grandTotalTWD" style="margin:0; font-size: 36px;">$ 0</h2>
+            <p>韓元累計: <span id="grandTotalKRW">0</span> ₩</p>
+        </div>
+        <div id="expenseList"></div>
+        <button onclick="clearData()" style="width:100%; padding:12px; background:#ff8787; color:white; border:none; border-radius:12px; margin-top:20px; font-weight:bold;">清空帳目</button>
+    </div>
+
     <div id="day7" class="content-card">
         <h3>📸 旅人圖文誌</h3>
         <div style="background:#f8f9fa; padding:15px; border-radius:15px; margin-bottom:20px;">
             <input type="text" id="postTitle" placeholder="標題..." style="width:100%; margin-bottom:10px;">
-            <textarea id="postContent" placeholder="記錄當下的心情..." style="width:100%; height:80px; margin-bottom:10px;"></textarea>
-            <input type="file" id="postFile" multiple accept="image/*" style="font-size:12px; margin-bottom:10px; display:block;">
-            <button class="add-btn" style="width:100%;" onclick="savePost()">發布貼文</button>
+            <textarea id="postContent" placeholder="心情點滴..." style="width:100%; height:80px; margin-bottom:10px;"></textarea>
+            <input type="file" id="postFile" multiple accept="image/*" style="display:block; margin-bottom:10px;">
+            <button class="add-btn" onclick="savePost()">發布貼文</button>
         </div>
         <div id="blogWall"></div>
     </div>
@@ -304,6 +279,22 @@
         const EX_RATE = 0.022;
         let expenses = JSON.parse(localStorage.getItem('trip_acc_v2')) || [];
         let posts = JSON.parse(localStorage.getItem('trip_posts_v2')) || [];
+
+        // 初始化：載入打包清單勾選狀態
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedChecklist = JSON.parse(localStorage.getItem('trip_checklist')) || {};
+            document.querySelectorAll('.save-state').forEach((cb, index) => {
+                const id = 'item-' + index;
+                cb.id = id;
+                if (savedChecklist[id]) cb.checked = true;
+                
+                cb.addEventListener('change', () => {
+                    const currentList = JSON.parse(localStorage.getItem('trip_checklist')) || {};
+                    currentList[cb.id] = cb.checked;
+                    localStorage.setItem('trip_checklist', JSON.stringify(currentList));
+                });
+            });
+        });
 
         function showDay(n) {
             document.querySelectorAll('.content-card').forEach(c => c.style.display='none');
@@ -323,7 +314,7 @@
         function addExpense(day) {
             const item = document.getElementById('item'+day).value;
             const cost = document.getElementById('cost'+day).value;
-            if(!item || !cost) return alert("請填寫完整資訊");
+            if(!item || !cost) return alert("請填寫資訊");
             expenses.push({ day, item, cost: parseInt(cost) });
             localStorage.setItem('trip_acc_v2', JSON.stringify(expenses));
             alert("✅ 帳目已記錄");
@@ -334,14 +325,11 @@
         function refreshFinance() {
             const list = document.getElementById('expenseList');
             let totalKRW = 0;
-            if(expenses.length === 0) {
-                list.innerHTML = '<p style="text-align:center; color:#ccc;">尚無消費紀錄</p>';
-            } else {
-                list.innerHTML = expenses.map(ex => {
+            list.innerHTML = expenses.length === 0 ? '<p style="text-align:center; color:#ccc;">尚無紀錄</p>' : 
+                expenses.map(ex => {
                     totalKRW += ex.cost;
-                    return `<div class="acc-item"><span>D${ex.day}: ${ex.item}</span><b>${ex.cost.toLocaleString()} ₩</b></div>`;
+                    return `<div class="acc-item" style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #ddd;"><span>D${ex.day}: ${ex.item}</span><b>${ex.cost.toLocaleString()} ₩</b></div>`;
                 }).join('');
-            }
             document.getElementById('grandTotalKRW').innerText = totalKRW.toLocaleString();
             document.getElementById('grandTotalTWD').innerText = '$ ' + Math.round(totalKRW * EX_RATE).toLocaleString();
         }
