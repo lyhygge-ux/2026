@@ -20,41 +20,69 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
-            padding: 0;
+            padding: 0; /* 改為 0，讓 Header 能滿版 */
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
         }
 
+        /* 🎨 可愛標題區背景 */
         header {
             width: 100%;
             padding: 40px 0;
             background: linear-gradient(135deg, #a3c4f3 0%, #ffd1a4 100%);
             color: white;
             text-align: center;
+            position: relative;
+            overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
+        /* 背景小裝飾符號 */
+        header::before {
+            content: "☁️ ✈️ 🌍 🎒 📸 ⛵";
+            position: absolute;
+            font-size: 24px;
+            width: 120%;
+            top: 10px;
+            left: -10%;
+            opacity: 0.3;
+            letter-spacing: 50px;
+            animation: moveClouds 20s linear infinite;
+        }
+
+        @keyframes moveClouds {
+            from { transform: translateX(-10%); }
+            to { transform: translateX(10%); }
+        }
+
         header h1 {
-            font-size: 26px;
+            font-size: 28px;
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(5px);
-            padding: 10px 25px;
+            padding: 10px 30px;
             border-radius: 50px;
             display: inline-block;
             border: 2px solid white;
-            margin: 10px 0;
+            margin-top: 10px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
         }
 
+        header p {
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+
+        /* 日期導覽列 */
         .date-nav {
             display: flex;
             gap: 10px;
-            margin: 20px 0;
+            margin: 25px 0;
             overflow-x: auto;
             padding: 10px;
-            width: 90%;
-            justify-content: flex-start;
+            width: 95%;
+            justify-content: flex-start; /* 手機滑動較順 */
         }
 
         @media (min-width: 768px) {
@@ -63,13 +91,15 @@
 
         .date-btn {
             border: none;
-            padding: 10px 15px;
+            padding: 10px 18px;
             border-radius: 20px;
             background: white;
             cursor: pointer;
             font-weight: bold;
+            transition: 0.3s;
             box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
             white-space: nowrap;
+            color: var(--text-color);
         }
 
         .date-btn.active {
@@ -77,27 +107,73 @@
             color: white;
         }
 
+        .date-btn.btn-checklist {
+            background-color: #ffcfd2;
+        }
+
+        /* 行程內容卡片 */
         .content-card {
             background: white;
-            width: 85%;
+            width: 90%;
             max-width: 500px;
             border-radius: 25px;
-            padding: 20px;
+            padding: 25px;
             box-shadow: 5px 5px 15px rgba(0,0,0,0.03);
             display: none;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            animation: fadeIn 0.5s ease;
         }
 
         .content-card.active { display: block; }
 
-        .checklist-group { margin-bottom: 20px; }
-        .check-item { display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; }
-        .check-item input { width: 18px; height: 18px; margin-right: 10px; }
-        .check-item input:checked + span { text-decoration: line-through; color: var(--gray-text); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        .weather-info { background: #f0f7ff; padding: 10px; border-radius: 15px; margin-bottom: 15px; font-size: 14px; }
+        /* ✅ 行前清單專屬樣式 */
+        .checklist-group {
+            margin-bottom: 20px;
+        }
+        .checklist-group h4 {
+            border-left: 4px solid var(--primary-orange);
+            padding-left: 10px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .check-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .check-item input {
+            width: 18px;
+            height: 18px;
+            margin-right: 12px;
+            cursor: pointer;
+        }
+        /* 勾選後的文字效果 */
+        .check-item input:checked + span {
+            text-decoration: line-through;
+            color: var(--gray-text);
+        }
+
+        /* 天氣與內容樣式 */
+        .weather-info {
+            background: #f0f7ff;
+            padding: 10px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
         .itinerary-list { list-style: none; padding: 0; }
-        .itinerary-list li { margin-bottom: 10px; display: flex; align-items: center; }
+        .itinerary-list li { margin-bottom: 12px; display: flex; align-items: flex-start; line-height: 1.6; }
+        .itinerary-list span { margin-right: 10px; }
+        .price-tag { background: #fff9e6; padding: 10px; border-radius: 10px; font-size: 13px; border: 1px dashed #ffd1a4; margin-top: 10px; }
+
         footer { margin-top: auto; padding: 20px; font-size: 12px; color: #999; }
     </style>
 </head>
@@ -109,7 +185,7 @@
     </header>
 
     <div class="date-nav">
-        <button class="date-btn active" onclick="showDay(0)">📋 行前清單</button>
+        <button class="date-btn btn-checklist active" onclick="showDay(0)">📋 行前清單</button>
         <button class="date-btn" onclick="showDay(1)">5/15(五)</button>
         <button class="date-btn" onclick="showDay(2)">5/16(六)</button>
         <button class="date-btn" onclick="showDay(3)">5/17(日)</button>
@@ -119,43 +195,106 @@
 
     <div id="day0" class="content-card active">
         <h3>🎒 行前打包清單</h3>
+        <p style="font-size: 13px; color: #888; margin-bottom: 15px;">點擊文字即可勾選紀錄</p>
+        
         <div class="checklist-group">
-            <label class="check-item"><input type="checkbox"><span>護照、現金、信用卡</span></label>
-            <label class="check-item"><input type="checkbox"><span>雨傘、轉接插頭</span></label>
+            <h4>🛂 必帶證件與金錢</h4>
+            <label class="check-item"><input type="checkbox"><span>護照</span></label>
+            <label class="check-item"><input type="checkbox"><span>現金</span></label>
+            <label class="check-item"><input type="checkbox"><span>信用卡</span></label>
+            <label class="check-item"><input type="checkbox"><span>雨傘</span></label>
+            <label class="check-item"><input type="checkbox"><span>轉接插頭</span></label>
             <label class="check-item"><input type="checkbox"><span>手機充電線 *2</span></label>
         </div>
+
         <div class="checklist-group">
-            <label class="check-item"><input type="checkbox"><span>防曬用品、保冰袋</span></label>
-            <label class="check-item"><input type="checkbox"><span>盥洗用品、化妝品</span></label>
+            <h4>👕 一般物品</h4>
+            <label class="check-item"><input type="checkbox"><span>防曬帽</span></label>
+            <label class="check-item"><input type="checkbox"><span>防曬乳</span></label>
+            <label class="check-item"><input type="checkbox"><span>毛巾</span></label>
+            <label class="check-item"><input type="checkbox"><span>隱形眼鏡</span></label>
+            <label class="check-item"><input type="checkbox"><span>清洗液</span></label>
+            <label class="check-item"><input type="checkbox"><span>保冰袋</span></label>
+            <label class="check-item"><input type="checkbox"><span>水壺</span></label>
+            <label class="check-item"><input type="checkbox"><span>小包衛生紙</span></label>
+            <label class="check-item"><input type="checkbox"><span>濕紙巾</span></label>
+        </div>
+
+        <div class="checklist-group">
+            <h4>🧴 盥洗清潔類</h4>
+            <label class="check-item"><input type="checkbox"><span>保養品</span></label>
+            <label class="check-item"><input type="checkbox"><span>洗面乳</span></label>
+            <label class="check-item"><input type="checkbox"><span>化妝品</span></label>
+            <label class="check-item"><input type="checkbox"><span>刮鬍刀</span></label>
+            <label class="check-item"><input type="checkbox"><span>牙刷</span></label>
         </div>
     </div>
 
     <div id="day1" class="content-card">
-        <div class="weather-info">☀️ 預測：18°C - 24°C</div>
+        <div class="weather-info"><span>☀️ 慶州預測：18°C - 24°C</span></div>
         <h3>慶州韓屋漫遊</h3>
         <ul class="itinerary-list">
             <li><span>✈️</span> 桃園 → 金海機場</li>
             <li><span>♨️</span> 韓式汗蒸幕</li>
-            <li><span>⛩️</span> 慶州崔氏古宅</li>
+            <li><span>⛩️</span> 慶州崔氏古宅韓屋村</li>
+            <li><span>🌉</span> 月精橋 / 皇理團路</li>
         </ul>
     </div>
 
-    <div id="day2" class="content-card"><div class="weather-info">🌤️ 19°C - 23°C</div><h3>釜山樂園暢遊</h3></div>
-    <div id="day3" class="content-card"><div class="weather-info">☁️ 17°C - 21°C</div><h3>海雲台夜景</h3></div>
-    <div id="day4" class="content-card"><div class="weather-info">☀️ 20°C - 25°C</div><h3>白淺灘文化村</h3></div>
-    <div id="day5" class="content-card"><div class="weather-info">🌦️ 18°C - 22°C</div><h3>甘川洞歸途</h3></div>
+    <div id="day2" class="content-card">
+        <div class="weather-info"><span>🌤️ 釜山預測：19°C - 23°C</span></div>
+        <h3>釜山樂園暢遊</h3>
+        <ul class="itinerary-list">
+            <li><span>🌊</span> 海東龍宮寺</li>
+            <li><span>🎡</span> 釜山樂天世界樂園</li>
+            <li><span>🛍️</span> 樂天 OUTLET + LUGE 🏎️</li>
+        </ul>
+    </div>
+
+    <div id="day3" class="content-card">
+        <div class="weather-info"><span>☁️ 海雲台預測：17°C - 21°C</span></div>
+        <h3>海雲台藍線與夜景</h3>
+        <ul class="itinerary-list">
+            <li><span>🚃</span> 海雲台藍線公園</li>
+            <li><span>🐟</span> 海雲台傳統市場</li>
+            <li><span>🌃</span> THE BAY 101 夜景</li>
+        </ul>
+    </div>
+
+    <div id="day4" class="content-card">
+        <div class="weather-info"><span>☀️ 影島預測：20°C - 25°C</span></div>
+        <h3>白淺灘與松島</h3>
+        <ul class="itinerary-list">
+            <li><span>🌊</span> 白淺灘文化村</li>
+            <li><span>🛤️</span> 絕影海岸散步路</li>
+            <li><span>🚠</span> 松島天空步道</li>
+            <li><span>🛍️</span> 西面鬧區逛街</li>
+        </ul>
+    </div>
+
+    <div id="day5" class="content-card">
+        <div class="weather-info"><span>🌦️ 釜山預測：18°C - 22°C</span></div>
+        <h3>甘川與歸途</h3>
+        <ul class="itinerary-list">
+            <li><span>🏡</span> 甘川文化洞彩繪村</li>
+            <li><span>🛍️</span> 南浦洞商圈 / 國際市場</li>
+            <li><span>✈️</span> 金海機場 → 桃園</li>
+        </ul>
+    </div>
 
     <footer>✨ 2026 釜山旅程計畫 ✈️</footer>
 
     <script>
-        function showDay(num) {
-            const cards = document.querySelectorAll('.content-card');
-            const btns = document.querySelectorAll('.date-btn');
-            cards.forEach(c => c.style.display = 'none');
-            btns.forEach(b => b.classList.remove('active'));
+        function showDay(dayNumber) {
+            document.querySelectorAll('.content-card').forEach(card => card.classList.remove('active'));
+            document.querySelectorAll('.date-btn').forEach(btn => btn.classList.remove('active'));
             
-            document.getElementById('day' + num).style.display = 'block';
-            btns[num].classList.add('active');
+            document.getElementById('day' + dayNumber).classList.add('active');
+            // 因為多了一個清單按鈕，所以 index 對應要正確
+            document.querySelectorAll('.date-btn')[dayNumber].classList.add('active');
+            
+            // 每次切換自動捲動回頂部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
