@@ -3,52 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>韓國・釜山・慶州 五日漫遊</title>
+    <title>韓國・釜山・慶州 智慧漫遊</title>
     <style>
         :root {
             --bg-color: #fdf8f1;
             --primary-blue: #a3c4f3;
             --primary-orange: #ffd1a4;
-            --primary-green: #c1e1c1;
-            --primary-purple: #dcd3ff;
             --text-color: #555;
             --gray-text: #ccc;
+            --deep-cream: #e6d5b8; /* 深奶油色 */
+            --dark-brown: #5d4037; /* 搭配深奶油色的深咖啡字體 */
         }
 
         body { font-family: "Microsoft JhengHei", sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
 
         header { width: 100%; padding: 40px 0; background: linear-gradient(135deg, #a3c4f3 0%, #ffd1a4 100%); color: white; text-align: center; position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        header::before { content: "☁️ ✈️ 🌍 🎒 📸 ⛵"; position: absolute; font-size: 24px; width: 120%; top: 10px; left: -10%; opacity: 0.3; letter-spacing: 50px; animation: moveClouds 20s linear infinite; }
+        @keyframes moveClouds { from { transform: translateX(-10%); } to { transform: translateX(10%); } }
         header h1 { font-size: 26px; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(5px); padding: 10px 30px; border-radius: 50px; display: inline-block; border: 2px solid white; margin-top: 10px; }
 
-        /* 導覽列 */
         .date-nav { display: flex; gap: 10px; margin: 25px 0; overflow-x: auto; padding: 10px; width: 95%; justify-content: flex-start; }
         .date-btn { border: none; padding: 10px 18px; border-radius: 20px; background: white; cursor: pointer; font-weight: bold; box-shadow: 2px 2px 5px rgba(0,0,0,0.05); white-space: nowrap; }
         .date-btn.active { background-color: var(--primary-blue); color: white; }
         .btn-finance { background-color: #ffe5ec; }
         .btn-blog { background-color: #e2ece9; }
 
-        /* 卡片設計 */
         .content-card { background: white; width: 90%; max-width: 500px; border-radius: 25px; padding: 25px; box-shadow: 5px 5px 15px rgba(0,0,0,0.03); display: none; margin-bottom: 40px; animation: fadeIn 0.4s ease; }
         .content-card.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 智慧匯率計算器 */
+        /* 智慧匯率與財務儀表板 */
         .calc-box { background: #fff9e6; border: 2px solid #ffd1a4; border-radius: 15px; padding: 15px; margin-bottom: 20px; text-align: center; }
         .calc-input-group { display: flex; align-items: center; gap: 10px; justify-content: center; margin-top: 10px; }
-        .calc-input { width: 100px; padding: 8px; border-radius: 10px; border: 1px solid #ddd; text-align: center; }
+        .calc-input { width: 120px; padding: 10px; border-radius: 10px; border: 1px solid #ddd; text-align: center; font-size: 16px; }
 
-        /* 記帳明細樣式 */
-        .finance-summary { background: #333; color: #a2f3a2; padding: 25px; border-radius: 20px; text-align: center; margin-bottom: 20px; }
-        .acc-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #eee; font-size: 14px; }
+        /* 修改後的深奶油色財務儀表板 */
+        .finance-summary { background: var(--deep-cream); color: var(--dark-brown); padding: 25px; border-radius: 20px; text-align: center; margin-bottom: 20px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); }
+        .acc-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #d7c5a8; font-size: 14px; }
 
-        /* 日誌樣式 */
+        /* 日誌與其餘組件 */
         .blog-post { border: 1px solid #eee; border-radius: 20px; padding: 15px; margin-bottom: 20px; background: #fff; }
         .blog-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
         .blog-imgs img { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; }
-
-        input, textarea { border: 1px solid #ddd; padding: 10px; border-radius: 10px; }
         .add-btn { background: var(--primary-blue); color: white; border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; font-weight: bold; }
-        
+        input, textarea { border: 1px solid #ddd; padding: 10px; border-radius: 10px; font-size: 14px; }
         footer { padding: 20px; font-size: 12px; color: #999; text-align: center; }
     </style>
 </head>
@@ -56,7 +54,7 @@
 
     <header>
         <p>SEOUL・BUSAN・GYEONGJU</p>
-        <h1>✈️ 釜山慶州・智慧旅行箱</h1>
+        <h1>✈️ 韓國・釜山・慶州 五日漫遊</h1>
     </header>
 
     <div class="date-nav">
@@ -71,43 +69,30 @@
     </div>
 
     <div id="day6" class="content-card">
-        <h3>💱 智慧匯率換算</h3>
+        <h3>💱 智慧匯率換算 (0.022)</h3>
         <div class="calc-box">
             <p style="margin:0; font-size: 14px;">輸入韓元自動轉台幣</p>
             <div class="calc-input-group">
                 <input type="number" class="calc-input" id="krwInput" placeholder="韓元₩" oninput="convertCurrency()">
                 <span>➔</span>
-                <b style="color: #d9480f;">NT$ <span id="twdOutput">0</span></b>
+                <b style="color: #d9480f; font-size: 20px;">NT$ <span id="twdOutput">0</span></b>
             </div>
-            <small style="display:block; margin-top:10px; color:#999;">目前參考匯率：0.022</small>
         </div>
 
-        <hr>
-
-        <h3>💰 財務總覽</h3>
+        <h3>💰 財務總覽 (TWD)</h3>
         <div class="finance-summary">
-            <p style="margin:0; font-size: 14px; opacity: 0.8;">總支出估計 (TWD)</p>
-            <h2 id="grandTotalTWD" style="margin:10px 0; font-size: 32px;">$ 0</h2>
-            <p style="margin:0; font-size: 14px;">韓元累計: <span id="grandTotalKRW">0</span> ₩</p>
+            <h2 id="grandTotalTWD" style="margin:0; font-size: 36px;">$ 0</h2>
+            <p style="margin:5px 0 0 0; font-size: 14px; font-weight: bold; opacity: 0.8;">韓元累計: <span id="grandTotalKRW">0</span> ₩</p>
         </div>
 
-        <div id="expenseList">
-            <p style="text-align:center; color:#ccc;">尚無消費紀錄，請至每日行程點擊「新增支出」</p>
-        </div>
-        
+        <div id="expenseList" style="margin-top:15px;"></div>
         <button onclick="clearData()" style="width:100%; padding:12px; background:#ff8787; color:white; border:none; border-radius:12px; margin-top:20px; font-weight:bold;">清空帳目</button>
     </div>
 
-    <div id="day7" class="content-card">
-        <h3>📸 撰寫旅人日誌</h3>
-        <div style="background:#f8f9fa; padding:15px; border-radius:15px;">
-            <input type="text" id="postTitle" placeholder="標題..." style="width:90%; margin-bottom:10px;">
-            <textarea id="postContent" placeholder="這趟旅程最難忘的是..." style="width:90%; height:80px; margin-bottom:10px;"></textarea>
-            <input type="file" id="postFile" multiple accept="image/*" style="font-size:12px;">
-            <button class="add-btn" style="width:100%; margin-top:15px;" onclick="savePost()">發布貼文</button>
+    <div id="day0" class="content-card active">
+        <h3>🎒 行前打包清單</h3>
+        <p>請記得勾選你的行李清單！</p>
         </div>
-        <div id="blogWall" style="margin-top:20px;"></div>
-    </div>
 
     <div id="day1" class="content-card">
         <h3>5/15(五) 慶州韓屋漫遊</h3>
@@ -126,19 +111,37 @@
             </div>
         </div>
     </div>
-    
-    <div id="day0" class="content-card active"><h3>🎒 行前打包清單</h3><p>請記得勾選你的行李清單！</p></div>
-    <div id="day2" class="content-card"><h3>5/16(六) 釜山樂園</h3><div style="background:#f0f7ff; padding:15px; border-radius:15px; margin-top:20px;"><b>💸 新增支出</b><div style="display:flex; gap:5px; margin-top:10px;"><input type="text" id="item2" placeholder="品項" style="flex:2;"><input type="number" id="cost2" placeholder="韓元₩" style="flex:1;"><button class="add-btn" onclick="addExpense(2)">新增</button></div></div></div>
+
+    <div id="day2" class="content-card">
+        <h3>5/16(六) 釜山樂園暢遊</h3>
+        <p>樂天世界門票+無限暢玩、斜坡滑車2次券等...</p>
+        <div style="background:#f0f7ff; padding:15px; border-radius:15px; margin-top:20px;">
+            <b>💸 新增支出</b>
+            <div style="display:flex; gap:5px; margin-top:10px;"><input type="text" id="item2" placeholder="品項" style="flex:2;"><input type="number" id="cost2" placeholder="韓元₩" style="flex:1;"><button class="add-btn" onclick="addExpense(2)">新增</button></div>
+        </div>
+    </div>
+
     <div id="day3" class="content-card"><h3>5/17(日) 海雲台</h3><div style="background:#f0f7ff; padding:15px; border-radius:15px; margin-top:20px;"><b>💸 新增支出</b><div style="display:flex; gap:5px; margin-top:10px;"><input type="text" id="item3" placeholder="品項" style="flex:2;"><input type="number" id="cost3" placeholder="韓元₩" style="flex:1;"><button class="add-btn" onclick="addExpense(3)">新增</button></div></div></div>
     <div id="day4" class="content-card"><h3>5/18(一) 白淺灘</h3><div style="background:#f0f7ff; padding:15px; border-radius:15px; margin-top:20px;"><b>💸 新增支出</b><div style="display:flex; gap:5px; margin-top:10px;"><input type="text" id="item4" placeholder="品項" style="flex:2;"><input type="number" id="cost4" placeholder="韓元₩" style="flex:1;"><button class="add-btn" onclick="addExpense(4)">新增</button></div></div></div>
     <div id="day5" class="content-card"><h3>5/19(二) 甘川與歸途</h3><div style="background:#f0f7ff; padding:15px; border-radius:15px; margin-top:20px;"><b>💸 新增支出</b><div style="display:flex; gap:5px; margin-top:10px;"><input type="text" id="item5" placeholder="品項" style="flex:2;"><input type="number" id="cost5" placeholder="韓元₩" style="flex:1;"><button class="add-btn" onclick="addExpense(5)">新增</button></div></div></div>
 
-    <footer>✨ 2026 釜山慶州智慧漫遊 ✈️</footer>
+    <div id="day7" class="content-card">
+        <h3>📸 旅人圖文誌</h3>
+        <div style="background:#f8f9fa; padding:15px; border-radius:15px; margin-bottom:20px;">
+            <input type="text" id="postTitle" placeholder="標題..." style="width:90%; margin-bottom:10px;">
+            <textarea id="postContent" placeholder="記錄當下的心情..." style="width:90%; height:80px; margin-bottom:10px;"></textarea>
+            <input type="file" id="postFile" multiple accept="image/*" style="font-size:12px; margin-bottom:10px; display:block;">
+            <button class="add-btn" style="width:100%;" onclick="savePost()">發布貼文</button>
+        </div>
+        <div id="blogWall"></div>
+    </div>
+
+    <footer>✨ 2026 釜山慶州智慧旅行助手</footer>
 
     <script>
-        const EX_RATE = 0.024;
-        let expenses = JSON.parse(localStorage.getItem('trip_acc')) || [];
-        let posts = JSON.parse(localStorage.getItem('trip_posts')) || [];
+        const EX_RATE = 0.022;
+        let expenses = JSON.parse(localStorage.getItem('trip_acc_v2')) || [];
+        let posts = JSON.parse(localStorage.getItem('trip_posts_v2')) || [];
 
         function showDay(n) {
             document.querySelectorAll('.content-card').forEach(c => c.style.display='none');
@@ -147,23 +150,21 @@
             document.querySelectorAll('.date-btn')[n].classList.add('active');
             if(n===6) refreshFinance();
             if(n===7) renderPosts();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 智慧匯率換算
         function convertCurrency() {
             const krw = document.getElementById('krwInput').value;
-            const twd = Math.round(krw * EX_RATE);
-            document.getElementById('twdOutput').innerText = twd.toLocaleString();
+            document.getElementById('twdOutput').innerText = Math.round(krw * EX_RATE).toLocaleString();
         }
 
-        // 記帳功能
         function addExpense(day) {
             const item = document.getElementById('item'+day).value;
             const cost = document.getElementById('cost'+day).value;
-            if(!item || !cost) return alert("請輸入完整資料");
+            if(!item || !cost) return alert("請填寫完整資訊");
             expenses.push({ day, item, cost: parseInt(cost) });
-            localStorage.setItem('trip_acc', JSON.stringify(expenses));
-            alert("✅ 記帳成功！");
+            localStorage.setItem('trip_acc_v2', JSON.stringify(expenses));
+            alert("✅ 帳目已記錄");
             document.getElementById('item'+day).value = '';
             document.getElementById('cost'+day).value = '';
         }
@@ -172,7 +173,7 @@
             const list = document.getElementById('expenseList');
             let totalKRW = 0;
             if(expenses.length === 0) {
-                list.innerHTML = '<p style="text-align:center; color:#ccc;">目前尚無紀錄</p>';
+                list.innerHTML = '<p style="text-align:center; color:#ccc;">尚無消費紀錄</p>';
             } else {
                 list.innerHTML = expenses.map(ex => {
                     totalKRW += ex.cost;
@@ -183,24 +184,21 @@
             document.getElementById('grandTotalTWD').innerText = '$ ' + Math.round(totalKRW * EX_RATE).toLocaleString();
         }
 
-        function clearData() { if(confirm("確定要刪除所有帳目嗎？")) { expenses=[]; localStorage.removeItem('trip_acc'); refreshFinance(); } }
+        function clearData() { if(confirm("確定刪除帳目？")) { expenses=[]; localStorage.removeItem('trip_acc_v2'); refreshFinance(); } }
 
-        // 日誌功能
         function savePost() {
             const title = document.getElementById('postTitle').value;
             const content = document.getElementById('postContent').value;
             const files = document.getElementById('postFile').files;
-            if(!title || !content) return alert("請輸入標題與內容");
-
+            if(!title || !content) return;
             const readers = [...files].map(f => new Promise(res => {
                 const fr = new FileReader();
                 fr.onload = e => res(e.target.result);
                 fr.readAsDataURL(f);
             }));
-
             Promise.all(readers).then(imgs => {
                 posts.unshift({ title, content, imgs, time: new Date().toLocaleString() });
-                localStorage.setItem('trip_posts', JSON.stringify(posts));
+                localStorage.setItem('trip_posts_v2', JSON.stringify(posts));
                 document.getElementById('postTitle').value = '';
                 document.getElementById('postContent').value = '';
                 renderPosts();
